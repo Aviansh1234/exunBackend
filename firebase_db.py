@@ -5,7 +5,7 @@ import config
 
 
 def current_milli_time():
-    return str(round(time.time() * 1000))
+    return (round(time.time() * 1000))
 
 cred = credentials.Certificate(config.firebase_key_path)
 app = firebase_admin.initialize_app(cred)
@@ -17,7 +17,7 @@ def get_db_locations():
     locations = loc_ref.stream()
     arr = []
     for location in locations:
-        if location["Time"]-current_milli_time()>=10000:
+        if location.to_dict()["Time"]-current_milli_time()>=10000:
             continue
         arr.append(location.to_dict())
     return arr
