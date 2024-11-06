@@ -17,9 +17,12 @@ def get_db_locations():
     locations = loc_ref.stream()
     arr = []
     for location in locations:
+        if location["Time"]-current_milli_time()>=10000:
+            continue
         arr.append(location.to_dict())
     return arr
 
 def put_location(loc):
+    print(loc)
     loc["Time"] = current_milli_time()
     loc_ref.document(loc["Id"]).set(loc)
